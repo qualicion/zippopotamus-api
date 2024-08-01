@@ -3,7 +3,7 @@ import config from "../config/config.baseurl"
 const request = supertest(config.baseUrl);
 
 class ZippotamusController {
-  getAddress(endpoint) {
+  getAddress(endpoint: string) {
     return request.get(endpoint);
   }
 }
