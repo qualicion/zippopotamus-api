@@ -1,6 +1,7 @@
 import controller from "../controller/zippotamus.controller";
 import { getAddress } from "../utils/helper";
 import config from "../config/config.baseurl";
+import data from "../data/codes";
 
 describe("Zippotamus API", () => {
   describe("Check status and structure", () => {
@@ -17,9 +18,16 @@ describe("Zippotamus API", () => {
     });
 
     it("should check country and postal code", async () => {
-      const response = await controller.getAddress("/us/90210");
-      expect(response.body.country).toEqual("United States");
-      expect(response.body["post code"]).toEqual("90210");
+      const expectedCountry = "United States";
+      data.countries.forEach((country) => {
+        data.codes.forEach((code) => {
+          const response = responses.find(
+            (res) => res.body["post code"] === code
+          );
+          expect(response.body.country).toEqual(expectedCountry);
+          expect(response.body["post code"]).toEqual(code);
+        });
+      });
     });
   });
 
